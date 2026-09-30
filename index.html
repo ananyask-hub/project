@@ -1,152 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudySense</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudySense</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
 
-        body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    padding: 30px 15px;
+    color: #333;
+}
 
-        .container {
-            background: white;
-            width: 100%;
-            max-width: 700px;
-            padding: 45px;
-            border-radius: 25px;
-            text-align: center;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: white;
+    padding: 35px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+}
 
-        h1 {
-            font-size: 45px;
-            color: #5b4bb7;
-            margin-bottom: 10px;
-        }
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-        .tagline {
-            font-size: 20px;
-            color: #555;
-            margin-bottom: 30px;
-        }
+h1 {
+    color: #5b4bb7;
+    font-size: 45px;
+}
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 30px 0;
-        }
+.tagline {
+    color: #666;
+    font-size: 18px;
+    margin-top: 8px;
+}
 
-        .feature {
-            background: #f3f1ff;
-            padding: 20px;
-            border-radius: 15px;
-            color: #444;
-        }
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
 
-        .feature h3 {
-            color: #5b4bb7;
-            margin-bottom: 8px;
-        }
+.feature {
+    background: #f3f1ff;
+    padding: 25px;
+    border-radius: 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
 
-        button {
-            background: #5b4bb7;
-            color: white;
-            border: none;
-            padding: 15px 35px;
-            border-radius: 30px;
-            font-size: 18px;
-            cursor: pointer;
-        }
+.feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
 
-        button:hover {
-            background: #44349b;
-        }
+.feature h3 {
+    color: #5b4bb7;
+    margin-bottom: 8px;
+}
 
-        #message {
-            margin-top: 20px;
-            color: #5b4bb7;
-            font-weight: bold;
-        }
+.section {
+    display: none;
+    background: #faf9ff;
+    padding: 25px;
+    border-radius: 18px;
+    margin-top: 20px;
+}
 
-        @media (max-width: 600px) {
-            .features {
-                grid-template-columns: 1fr;
-            }
+.section.active {
+    display: block;
+}
 
-            h1 {
-                font-size: 35px;
-            }
+.section h2 {
+    color: #5b4bb7;
+    margin-bottom: 15px;
+}
 
-            .container {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+textarea,
+input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+button {
+    background: #5b4bb7;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+}
+
+button:hover {
+    background: #44349b;
+}
+
+.timer {
+    text-align: center;
+}
+
+#timerDisplay {
+    font-size: 60px;
+    font-weight: bold;
+    color: #5b4bb7;
+    margin: 20px;
+}
+
+.task {
+    background: white;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.progress-container {
+    background: #ddd;
+    height: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+#progressBar {
+    background: #5b4bb7;
+    height: 100%;
+    width: 0%;
+    transition: 0.3s;
+}
+
+.message {
+    color: #5b4bb7;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 35px;
+    }
+
+    .container {
+        padding: 25px 18px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <h1>📚 StudySense</h1>
+<header>
+    <h1>📚 StudySense</h1>
+    <p class="tagline">
+        Study smarter. Stay focused. Achieve more.
+    </p>
+</header>
 
-        <p class="tagline">
-            Study smarter. Stay focused. Achieve more.
-        </p>
+<div class="features">
 
-        <div class="features">
+    <div class="feature" onclick="showSection('notes')">
+        <h3>📝 Smart Notes</h3>
+        <p>Write and save your study notes.</p>
+    </div>
 
-            <div class="feature">
-                <h3>📝 Smart Notes</h3>
-                <p>Keep your study notes organized in one place.</p>
-            </div>
+    <div class="feature" onclick="showSection('timer')">
+        <h3>⏰ Study Timer</h3>
+        <p>Focus with a simple study timer.</p>
+    </div>
 
-            <div class="feature">
-                <h3>⏰ Study Timer</h3>
-                <p>Use focused study sessions to avoid distractions.</p>
-            </div>
+    <div class="feature" onclick="showSection('tasks')">
+        <h3>✅ Task Tracker</h3>
+        <p>Manage your study tasks.</p>
+    </div>
 
-            <div class="feature">
-                <h3>✅ Task Tracker</h3>
-                <p>Keep track of what you have completed.</p>
-            </div>
+    <div class="feature" onclick="showSection('goals')">
+        <h3>🎯 Study Goals</h3>
+        <p>Set and track your daily goal.</p>
+    </div>
 
-            <div class="feature">
-                <h3>🎯 Study Goals</h3>
-                <p>Set goals and stay motivated throughout your studies.</p>
-            </div>
+</div>
 
-        </div>
+<!-- SMART NOTES -->
 
-        <button onclick="startStudying()">
-            Start Studying 🚀
-        </button>
+<div id="notes" class="section">
 
-        <p id="message"></p>
+    <h2>📝 Smart Notes</h2>
+
+    <textarea id="notesText"
+        placeholder="Write your study notes here..."></textarea>
+
+    <button onclick="saveNotes()">Save Notes</button>
+    <button onclick="clearNotes()">Clear</button>
+
+    <p id="notesMessage" class="message"></p>
+
+</div>
+
+
+<!-- STUDY TIMER -->
+
+<div id="timer" class="section">
+
+    <h2>⏰ Study Timer</h2>
+
+    <div class="timer">
+
+        <div id="timerDisplay">25:00</div>
+
+        <button onclick="startTimer()">▶ Start</button>
+        <button onclick="pauseTimer()">⏸ Pause</button>
+        <button onclick="resetTimer()">🔄 Reset</button>
 
     </div>
 
-    <script>
-        function startStudying() {
-            document.getElementById("message").innerText =
-                "Great! Your study session has started. 📖✨";
+</div>
+
+
+<!-- TASK TRACKER -->
+
+<div id="tasks" class="section">
+
+    <h2>✅ Task Tracker</h2>
+
+    <input
+        type="text"
+        id="taskInput"
+        placeholder="Enter a study task..."
+    >
+
+    <button onclick="addTask()">Add Task</button>
+
+    <div id="taskList"></div>
+
+</div>
+
+
+<!-- STUDY GOALS -->
+
+<div id="goals" class="section">
+
+    <h2>🎯 Study Goal</h2>
+
+    <input
+        type="number"
+        id="goalInput"
+        placeholder="Enter goal in minutes"
+        min="1"
+    >
+
+    <button onclick="setGoal()">Set Goal</button>
+
+    <div class="progress-container">
+        <div id="progressBar"></div>
+    </div>
+
+    <p id="goalMessage">No goal set yet.</p>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* SECTION NAVIGATION */
+
+function showSection(sectionId) {
+
+    const sections = document.querySelectorAll(".section");
+
+    sections.forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(sectionId).classList.add("active");
+}
+
+
+/* SMART NOTES */
+
+function saveNotes() {
+
+    const notes = document.getElementById("notesText").value;
+
+    localStorage.setItem("studyNotes", notes);
+
+    document.getElementById("notesMessage").innerText =
+        "Notes saved successfully! 📚";
+}
+
+function clearNotes() {
+
+    document.getElementById("notesText").value = "";
+
+    localStorage.removeItem("studyNotes");
+
+    document.getElementById("notesMessage").innerText =
+        "Notes cleared.";
+}
+
+
+/* STUDY TIMER */
+
+let timeLeft = 25 * 60;
+let timerInterval = null;
+
+function updateTimer() {
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    document.getElementById("timerDisplay").innerText =
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+}
+
+function startTimer() {
+
+    if (timerInterval !== null) return;
+
+    timerInterval = setInterval(function() {
+
+        if (timeLeft > 0) {
+
+            timeLeft--;
+            updateTimer();
+
+        } else {
+
+            clearInterval(timerInterval);
+            timerInterval = null;
+
+            alert("Study session complete! 🎉");
         }
-    </script>
+
+    }, 1000);
+}
+
+function pauseTimer() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+}
+
+function resetTimer() {
+
+    clearInterval(timerInterval);
+    timerInterval = null;
+
+    timeLeft = 25 * 60;
+
+    updateTimer();
+}
+
+
+/* TASK TRACKER */
+
+let tasks = [];
+
+function addTask() {
+
+    const input = document.getElementById("taskInput");
+
+    const taskText = input.value.trim();
+
+    if (taskText === "") {
+
+        alert("Please enter a task.");
+
+        return;
+    }
+
+    tasks.push({
+        text: taskText,
+        completed: false
+    });
+
+    input.value = "";
+
+    saveTasks();
+    displayTasks();
+}
+
+function displayTasks() {
+
+    const taskList = document.getElementById("taskList");
+
+    taskList.innerHTML = "";
+
+    tasks.forEach(function(task, index) {
+
+        const taskDiv = document.createElement("div");
+
+        taskDiv.className =
+            "task " + (task.completed ? "completed" : "");
+
+        taskDiv.innerHTML = `
+            <span onclick="completeTask(${index})">
+                ${task.text}
+            </span>
+
+            <button onclick="deleteTask(${index})">
+                ❌
+            </button>
+        `;
+
+        taskList.appendChild(taskDiv);
+    });
+}
+
+function completeTask(index) {
+
+    tasks[index].completed = !tasks[index].completed;
+
+    saveTasks();
+    displayTasks();
+}
+
+function deleteTask(index) {
+
+    tasks.splice(index, 1);
+
+    saveTasks();
+    displayTasks();
+}
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "studyTasks",
+        JSON.stringify(tasks)
+    );
+}
+
+function loadTasks() {
+
+    const savedTasks =
+        localStorage.getItem("studyTasks");
+
+    if (savedTasks) {
+
+        tasks = JSON.parse(savedTasks);
+
+        displayTasks();
+    }
+}
+
+
+/* STUDY GOALS */
+
+let studyGoal = 0;
+
+function setGoal() {
+
+    const input =
+        document.getElementById("goalInput");
+
+    studyGoal = Number(input.value);
+
+    if (studyGoal <= 0) {
+
+        alert("Please enter a valid goal.");
+
+        return;
+    }
+
+    localStorage.setItem(
+        "studyGoal",
+        studyGoal
+    );
+
+    updateGoal();
+}
+
+function updateGoal() {
+
+    if (studyGoal > 0) {
+
+        document.getElementById("goalMessage").innerText =
+            "Your daily goal is " +
+            studyGoal +
+            " minutes. Keep going! 💪";
+
+        document.getElementById("progressBar").style.width =
+            "10%";
+    }
+}
+
+
+/* LOAD SAVED DATA */
+
+window.onload = function() {
+
+    const savedNotes =
+        localStorage.getItem("studyNotes");
+
+    if (savedNotes) {
+        document.getElementById("notesText").value =
+            savedNotes;
+    }
+
+    const savedGoal =
+        localStorage.getItem("studyGoal");
+
+    if (savedGoal) {
+        studyGoal = Number(savedGoal);
+        updateGoal();
+    }
+
+    loadTasks();
+};
+
+</script>
 
 </body>
 </html>
