@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoScan ♻️ | Smart Waste Management</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4faf5;
+            color: #183b20;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 70px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8%;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #218739;
+        }
+
+        .logo span {
+            color: #61b86c;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #315b39;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #218739;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 70px 8%;
+            gap: 50px;
+        }
+
+        .hero-text {
+            max-width: 600px;
+        }
+
+        .hero-text h1 {
+            font-size: 55px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            color: #269443;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #607263;
+            margin-bottom: 30px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #218739;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .hero-button:hover {
+            background: #176c2b;
+            transform: translateY(-2px);
+        }
+
+        .hero-card {
+            width: 360px;
+            height: 360px;
+            background: #dff3e2;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 150px;
+            box-shadow: 0 20px 50px rgba(33,135,57,0.15);
+        }
+
+        /* SCANNER */
+
+        .scanner-section {
+            padding: 70px 8%;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: #708074;
+        }
+
+        .scanner {
+            max-width: 800px;
+            margin: auto;
+            background: #f7fbf7;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.07);
+        }
+
+        .upload-box {
+            border: 2px dashed #65a96e;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            background: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .upload-box:hover {
+            background: #f0faf1;
+        }
+
+        .upload-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .upload-box h3 {
+            margin-bottom: 8px;
+        }
+
+        .upload-box p {
+            color: #718073;
+            font-size: 14px;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        #preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+            border-radius: 12px;
+            display: none;
+        }
+
+        .form-group {
+            margin-top: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbdacb;
+            border-radius: 10px;
+            background: white;
+            font-size: 15px;
+            color: #315b39;
+        }
+
+        .scan-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #218739;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .scan-button:hover {
+            background: #176c2b;
+        }
+
+        /* RESULT */
+
+        #result {
+            display: none;
+            margin-top: 35px;
+            background: white;
+            border-radius: 18px;
+            padding: 30px;
+            border-left: 6px solid #218739;
+        }
+
+        .result-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .result-icon {
+            width: 60px;
+            height: 60px;
+            background: #e2f5e4;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+        }
+
+        .result-title h3 {
+            font-size: 25px;
+        }
+
+        .result-title p {
+            color: #6d7b70;
+            margin-top: 5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .info-card {
+            background: #f5faf5;
+            padding: 18px;
+            border-radius: 12px;
+        }
+
+        .info-card h4 {
+            font-size: 14px;
+            color: #718073;
+            margin-bottom: 8px;
+        }
+
+        .info-card p {
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        /* FEATURES */
+
+        .features {
+            padding: 70px 8%;
+            background: #f4faf5;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card .icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            color: #718073;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #183b20;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        footer p {
+            color: #b9cbbb;
+            margin-top: 8px;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 800px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 42px;
+            }
+
+            .hero-card {
+                width: 250px;
+                height: 250px;
+                font-size: 100px;
+            }
+
+            .info-grid,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scanner {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav>
+    <div class="logo">
+        Eco<span>Scan</span> ♻️
+    </div>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#scanner">Scan</a>
+        <a href="#features">Features</a>
+    </div>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+    <div class="hero-text">
+
+        <h1>
+            Turn Waste Into
+            <span>Better Choices.</span>
+        </h1>
+
+        <p>
+            EcoScan helps you understand your waste, discover the
+            right way to dispose of it, and make more environmentally
+            friendly choices.
+        </p>
+
+        <a href="#scanner" class="hero-button">
+            Scan Your Waste ♻️
+        </a>
+
+    </div>
+
+    <div class="hero-card">
+        ♻️
+    </div>
+
+</section>
+
+
+<!-- SCANNER -->
+
+<section class="scanner-section" id="scanner">
+
+    <div class="section-title">
+
+        <h2>Waste Scanner</h2>
+
+        <p>
+            Upload an image and tell EcoScan what type of waste it is.
+        </p>
+
+    </div>
+
+
+    <div class="scanner">
+
+        <label for="imageInput" class="upload-box">
+
+            <div class="upload-icon">
+                📸
+            </div>
+
+            <h3>
+                Upload Waste Image
+            </h3>
+
+            <p>
+                Click here to choose an image
+            </p>
+
+            <input
+                type="file"
+                id="imageInput"
+                accept="image/*"
+            >
+
+            <img id="preview" alt="Waste preview">
+
+        </label>
+
+
+        <div class="form-group">
+
+            <label for="wasteType">
+                Select Waste Type
+            </label>
+
+            <select id="wasteType">
+
+                <option value="">
+                    -- Choose waste type --
+                </option>
+
+                <option value="plastic">
+                    Plastic
+                </option>
+
+                <option value="paper">
+                    Paper
+                </option>
+
+                <option value="glass">
+                    Glass
+                </option>
+
+                <option value="metal">
+                    Metal
+                </option>
+
+                <option value="organic">
+                    Organic
+                </option>
+
+                <option value="electronic">
+                    Electronic Waste
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button class="scan-button" onclick="scanWaste()">
+            🔍 Analyze Waste
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div id="result">
+
+            <div class="result-title">
+
+                <div class="result-icon" id="resultIcon">
+                    ♻️
+                </div>
+
+                <div>
+
+                    <h3 id="resultName">
+                        Plastic
+                    </h3>
+
+                    <p id="resultCategory">
+                        Recyclable Waste
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <h4>🗑️ Disposal</h4>
+
+                    <p id="disposal">
+                        -
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h4>🌱 Eco Impact</h4>
+
+                    <p id="impact">
+                        -
+                    </p>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <h4>💡 Eco Tip</h4>
+
+                    <p id="tip">
+                        -
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURES -->
+
+<section class="features" id="features">
+
+    <div class="section-title">
+
+        <h2>Why EcoScan?</h2>
+
+        <p>
+            Small actions can create a big environmental impact.
+        </p>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <div class="icon">
+                🔍
+            </div>
+
+            <h3>
+                Smart Identification
+            </h3>
+
+            <p>
+                Understand what type of waste you are dealing with.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                ♻️
+            </div>
+
+            <h3>
+                Better Disposal
+            </h3>
+
+            <p>
+                Learn the appropriate way to dispose of different
+                types of waste.
+            </p>
+
+        </div>
+
+
+        <div class="feature-card">
+
+            <div class="icon">
+                🌱
+            </div>
+
+            <h3>
+                Eco Tips
+            </h3>
+
+            <p>
+                Get simple suggestions to reduce your environmental
+                impact.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <h3>
+        EcoScan ♻️
+    </h3>
+
+    <p>
+        Scan smarter. Dispose better. Protect the planet.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /* IMAGE PREVIEW */
+
+    const imageInput = document.getElementById("imageInput");
+    const preview = document.getElementById("preview");
+
+    imageInput.addEventListener("change", function () {
+
+        const file = this.files[0];
+
+        if (file) {
+
+            const reader = new FileReader();
+
+            reader.onload = function (event) {
+
+                preview.src = event.target.result;
+
+                preview.style.display = "block";
+
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+    });
+
+
+    /* WASTE DATABASE */
+
+    const wasteData = {
+
+        plastic: {
+
+            name: "Plastic Waste",
+
+            category: "Recyclable Waste",
+
+            icon: "🥤",
+
+            disposal:
+                "Clean and place recyclable plastics in the appropriate recycling bin.",
+
+            impact:
+                "Plastic can remain in the environment for many years.",
+
+            tip:
+                "Reuse plastic containers whenever possible."
+
+        },
+
+
+        paper: {
+
+            name: "Paper Waste",
+
+            category: "Recyclable Waste",
+
+            icon: "📄",
+
+            disposal:
+                "Keep paper dry and place it in the paper recycling collection.",
+
+            impact:
+                "Recycling paper can reduce the demand for new raw materials.",
+
+            tip:
+                "Use both sides of paper before recycling it."
+
+        },
+
+
+        glass: {
+
+            name: "Glass Waste",
+
+            category: "Recyclable Waste",
+
+            icon: "🍾",
+
+            disposal:
+                "Separate glass from other waste and place it in a glass recycling collection.",
+
+            impact:
+                "Glass can be recycled multiple times.",
+
+            tip:
+                "Reuse glass jars and bottles whenever practical."
+
+        },
+
+
+        metal: {
+
+            name: "Metal Waste",
+
+            category: "Recyclable Waste",
+
+            icon: "🥫",
+
+            disposal:
+                "Clean metal containers and place them in the appropriate recycling collection.",
+
+            impact:
+                "Recycling metals reduces the need for new raw materials.",
+
+            tip:
+                "Recycle cans instead of throwing them into general waste."
+
+        },
+
+
+        organic: {
+
+            name: "Organic Waste",
+
+            category: "Compostable Waste",
+
+            icon: "🍎",
+
+            disposal:
+                "Place food scraps and other compostable material in an organic-waste or compost bin.",
+
+            impact:
+                "Organic waste can produce useful compost when properly processed.",
+
+            tip:
+                "Try composting vegetable and fruit scraps."
+
+        },
+
+
+        electronic: {
+
+            name: "Electronic Waste",
+
+            category: "E-Waste",
+
+            icon: "🔌",
+
+            disposal:
+                "Take electronic waste to an authorized e-waste collection or recycling center.",
+
+            impact:
+                "Improper e-waste disposal can release harmful substances.",
+
+            tip:
+                "Repair or donate working electronics before replacing them."
+
+        }
+
+    };
+
+
+    /* SCAN FUNCTION */
+
+    function scanWaste() {
+
+        const type = document.getElementById("wasteType").value;
+
+        const result = document.getElementById("result");
+
+        if (type === "") {
+
+            alert("Please select a waste type first.");
+
+            return;
+        }
+
+
+        const data = wasteData[type];
+
+
+        document.getElementById("resultIcon").textContent =
+            data.icon;
+
+        document.getElementById("resultName").textContent =
+            data.name;
+
+        document.getElementById("resultCategory").textContent =
+            data.category;
+
+        document.getElementById("disposal").textContent =
+            data.disposal;
+
+        document.getElementById("impact").textContent =
+            data.impact;
+
+        document.getElementById("tip").textContent =
+            data.tip;
+
+
+        result.style.display = "block";
+
+
+        result.scrollIntoView({
+            behavior: "smooth"
+        });
+
+    }
+
+</script>
+
+</body>
+</html>
